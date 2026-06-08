@@ -49,6 +49,7 @@ services:
       --timeout 60
       --access-logfile -
       --error-logfile -
+      --no-control-socket
       "
 
     volumes:
