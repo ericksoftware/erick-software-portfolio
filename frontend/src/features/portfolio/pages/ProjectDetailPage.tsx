@@ -9,12 +9,29 @@ import {
   useParams,
 } from 'react-router'
 
+import { AppError } from '../../../shared/components/AppError'
+import { AppLoader } from '../../../shared/components/AppLoader'
 import { portfolioApi } from '../api/portfolioApi'
 import type {
   ProjectDetail,
 } from '../types/portfolio.types'
-import { AppError } from '../../../shared/components/AppError'
-import { AppLoader } from '../../../shared/components/AppLoader'
+
+function getProjectInitials(title: string): string {
+  const words = title
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+
+  if (words.length === 0) {
+    return 'PR'
+  }
+
+  if (words.length === 1) {
+    return words[0].slice(0, 2).toUpperCase()
+  }
+
+  return `${words[0][0]}${words[1][0]}`.toUpperCase()
+}
 
 export function ProjectDetailPage() {
   const { slug } = useParams<{
@@ -35,12 +52,14 @@ export function ProjectDetailPage() {
         setError(
           new Error('El proyecto solicitado no es válido.'),
         )
+
         setIsLoading(false)
         return
       }
 
       try {
         setIsLoading(true)
+        setError(null)
 
         const result = await portfolioApi.getProjectBySlug(
           slug,
@@ -90,104 +109,179 @@ export function ProjectDetailPage() {
     )
   }
 
+  const primaryUrl =
+    project.demo_url || project.project_url
+
+  const hasGallery = project.gallery.some(
+    (image) => Boolean(image.image_url),
+  )
+
   return (
     <main className="project-detail">
-      <Link
-        to="/"
-        className="back-link"
-      >
-        <ArrowLeft
-          size={18}
-          aria-hidden="true"
-        />
+      <header className="project-detail__topbar">
+        <Link
+          to="/"
+          className="project-detail__back"
+        >
+          <ArrowLeft
+            size={17}
+            aria-hidden="true"
+          />
 
-        Volver al portfolio
-      </Link>
+          Volver al portfolio
+        </Link>
 
-      <header className="project-detail__header">
-        <span className="project-status">
+        <span className="project-detail__status">
           {project.status_label}
         </span>
-
-        <h1>{project.title}</h1>
-
-        <p>{project.short_description}</p>
-
-        <div className="project-detail__actions">
-          {project.demo_url && (
-            <a
-              href={project.demo_url}
-              target="_blank"
-              rel="noreferrer"
-              className="button button--primary"
-            >
-              <ExternalLink
-                size={18}
-                aria-hidden="true"
-              />
-
-              Ver demostración
-            </a>
-          )}
-
-          {project.repository_url
-            && !project.is_repository_private && (
-              <a
-                href={project.repository_url}
-                target="_blank"
-                rel="noreferrer"
-                className="button button--secondary"
-              >
-                <FaGithub
-                    size={18}
-                    aria-hidden="true"
-                    />
-
-                GitHub
-              </a>
-            )}
-        </div>
       </header>
 
-      <section className="project-detail__body">
-        <div>
-          <p className="eyebrow">
+      <section className="project-detail__hero">
+        <div className="project-detail__intro">
+          <p className="portfolio-eyebrow">
+            {project.role || 'Proyecto de software'}
+          </p>
+
+          <h1>{project.title}</h1>
+
+          <p className="project-detail__lead">
+            {project.short_description}
+          </p>
+
+          <div className="project-detail__actions">
+            {primaryUrl && (
+              <a
+                href={primaryUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="portfolio-button portfolio-button--primary"
+              >
+                Ver proyecto
+
+                <ExternalLink
+                  size={17}
+                  aria-hidden="true"
+                />
+              </a>
+            )}
+
+            {project.repository_url
+              && !project.is_repository_private && (
+                <a
+                  href={project.repository_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="portfolio-button portfolio-button--secondary"
+                >
+                  <FaGithub
+                    size={17}
+                    aria-hidden="true"
+                  />
+
+                  GitHub
+                </a>
+              )}
+          </div>
+        </div>
+
+        <div className="project-detail__cover">
+          {project.cover_image_url ? (
+            <img
+              src={project.cover_image_url}
+              alt={`Vista previa de ${project.title}`}
+            />
+          ) : (
+            <div className="project-detail__cover-fallback">
+              {getProjectInitials(project.title)}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="project-detail__content">
+        <article className="project-detail__panel project-detail__panel--wide">
+          <p className="portfolio-eyebrow">
             Descripción
           </p>
 
           <h2>Acerca del proyecto</h2>
 
           <p>{project.description}</p>
-        </div>
+        </article>
 
         {project.impact && (
-          <div>
-            <p className="eyebrow">
-              Participación
+          <article className="project-detail__panel">
+            <p className="portfolio-eyebrow">
+              Resultados
             </p>
 
-            <h2>Impacto y resultados</h2>
+            <h2>Impacto y participación</h2>
 
             <p>{project.impact}</p>
-          </div>
+          </article>
         )}
 
-        <div>
-          <p className="eyebrow">
-            Tecnologías
-          </p>
+        {project.technologies.length > 0 && (
+          <article className="project-detail__panel">
+            <p className="portfolio-eyebrow">
+              Stack
+            </p>
 
-          <div className="strength-list">
-            {project.technologies.map(
-              (technology) => (
-                <span key={technology.id}>
-                  {technology.name}
-                </span>
-              ),
-            )}
-          </div>
-        </div>
+            <h2>Tecnologías utilizadas</h2>
+
+            <div className="project-detail__technologies">
+              {project.technologies.map(
+                (technology) => (
+                  <span key={technology.id}>
+                    {technology.name}
+                  </span>
+                ),
+              )}
+            </div>
+          </article>
+        )}
       </section>
+
+      {hasGallery && (
+        <section className="project-detail__gallery-section">
+          <div className="project-detail__section-heading">
+            <p className="portfolio-eyebrow">
+              Galería
+            </p>
+
+            <h2>Vistas del proyecto</h2>
+          </div>
+
+          <div className="project-detail__gallery">
+            {project.gallery.map((image) => {
+              if (!image.image_url) {
+                return null
+              }
+
+              return (
+                <figure
+                  key={image.id}
+                  className="project-detail__gallery-item"
+                >
+                  <img
+                    src={image.image_url}
+                    alt={
+                      image.alt_text
+                      || `Imagen de ${project.title}`
+                    }
+                  />
+
+                  {image.caption && (
+                    <figcaption>
+                      {image.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              )
+            })}
+          </div>
+        </section>
+      )}
     </main>
   )
 }
