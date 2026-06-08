@@ -1,0 +1,204 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block bodyclass %}
+  {{ block.super }} portfolio-admin-dashboard
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+  <div class="admin-dashboard">
+    <section class="admin-dashboard__hero">
+      <div>
+        <p class="admin-dashboard__eyebrow">
+          Panel privado
+        </p>
+
+        <h1>Gestión del portfolio</h1>
+
+        <p>
+          Administra la información profesional, los proyectos,
+          la experiencia, las tecnologías y el contenido público
+          del sitio.
+        </p>
+      </div>
+
+      <div class="admin-dashboard__status">
+        <span></span>
+        Sistema disponible
+      </div>
+    </section>
+
+    <section class="admin-dashboard__quick-section">
+      <div class="admin-dashboard__section-heading">
+        <div>
+          <p class="admin-dashboard__eyebrow">
+            Accesos rápidos
+          </p>
+
+          <h2>Contenido principal</h2>
+        </div>
+      </div>
+
+      <div class="admin-quick-grid">
+        <a
+          href="{% url 'admin:portfolio_siteprofile_changelist' %}"
+          class="admin-quick-card admin-quick-card--primary"
+        >
+          <span class="admin-quick-card__number">
+            01
+          </span>
+
+          <div>
+            <strong>Perfil del sitio</strong>
+
+            <p>
+              Nombre, título profesional, fotografía,
+              descripción, correo y textos principales.
+            </p>
+          </div>
+
+          <span class="admin-quick-card__action">
+            Editar perfil
+          </span>
+        </a>
+
+        <a
+          href="{% url 'admin:portfolio_project_changelist' %}"
+          class="admin-quick-card"
+        >
+          <span class="admin-quick-card__number">
+            02
+          </span>
+
+          <div>
+            <strong>Proyectos</strong>
+
+            <p>
+              Crea, edita, ordena y publica los proyectos
+              mostrados en el portfolio.
+            </p>
+          </div>
+
+          <span class="admin-quick-card__action">
+            Gestionar
+          </span>
+        </a>
+
+        <a
+          href="{% url 'admin:portfolio_experience_changelist' %}"
+          class="admin-quick-card"
+        >
+          <span class="admin-quick-card__number">
+            03
+          </span>
+
+          <div>
+            <strong>Experiencia</strong>
+
+            <p>
+              Administra puestos, empresas, periodos,
+              impacto y tecnologías utilizadas.
+            </p>
+          </div>
+
+          <span class="admin-quick-card__action">
+            Gestionar
+          </span>
+        </a>
+
+        <a
+          href="{% url 'admin:portfolio_technology_changelist' %}"
+          class="admin-quick-card"
+        >
+          <span class="admin-quick-card__number">
+            04
+          </span>
+
+          <div>
+            <strong>Tecnologías</strong>
+
+            <p>
+              Organiza el stack tecnológico y sus categorías.
+            </p>
+          </div>
+
+          <span class="admin-quick-card__action">
+            Gestionar
+          </span>
+        </a>
+
+        <a
+          href="{% url 'admin:portfolio_education_changelist' %}"
+          class="admin-quick-card"
+        >
+          <span class="admin-quick-card__number">
+            05
+          </span>
+
+          <div>
+            <strong>Educación</strong>
+
+            <p>
+              Agrega formación académica, instituciones,
+              periodos y logotipos.
+            </p>
+          </div>
+
+          <span class="admin-quick-card__action">
+            Gestionar
+          </span>
+        </a>
+
+        <a
+          href="{% url 'admin:portfolio_sectionsettings_changelist' %}"
+          class="admin-quick-card"
+        >
+          <span class="admin-quick-card__number">
+            06
+          </span>
+
+          <div>
+            <strong>Secciones</strong>
+
+            <p>
+              Modifica títulos, descripciones, navegación,
+              visibilidad y orden.
+            </p>
+          </div>
+
+          <span class="admin-quick-card__action">
+            Configurar
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <section class="admin-dashboard__modules">
+      <div class="admin-dashboard__section-heading">
+        <div>
+          <p class="admin-dashboard__eyebrow">
+            Administración completa
+          </p>
+
+          <h2>Todos los módulos</h2>
+        </div>
+      </div>
+
+      {% if app_list %}
+        <div class="admin-app-list">
+          {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+        </div>
+      {% else %}
+        <div class="admin-dashboard__empty">
+          No tienes permisos para administrar ningún módulo.
+        </div>
+      {% endif %}
+    </section>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}

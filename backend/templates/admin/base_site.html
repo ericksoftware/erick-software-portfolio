@@ -1,0 +1,47 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block title %}
+  {% if subtitle %}
+    {{ subtitle }} |
+  {% endif %}
+
+  {{ title }} | Panel de Erick
+{% endblock %}
+
+{% block extrahead %}
+  {{ block.super }}
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="{% static 'portfolio_admin/favicon.svg' %}"
+  >
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static 'portfolio_admin/portfolio-admin.css' %}?v=4"
+  >
+{% endblock %}
+
+{% block branding %}
+  <div class="admin-branding">
+    <a
+      href="{% url 'admin:index' %}"
+      class="admin-branding__link"
+    >
+      <span class="admin-branding__mark">
+        ER
+      </span>
+
+      <span class="admin-branding__text">
+        <strong>Erick Portfolio</strong>
+        <small>Gestión de contenido</small>
+      </span>
+    </a>
+  </div>
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}
