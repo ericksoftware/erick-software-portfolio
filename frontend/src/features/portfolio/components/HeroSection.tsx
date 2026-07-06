@@ -44,7 +44,6 @@ function getInitials(fullName: string): string {
 
 export function HeroSection({
   profile,
-  section,
   socialLinks,
   technologyCount,
   projectCount,
@@ -100,11 +99,6 @@ export function HeroSection({
 
             {profile.availability_text}
           </div>
-
-          <p className="portfolio-eyebrow">
-            {section?.eyebrow || profile.hero_eyebrow}
-          </p>
-
           <h1>
             {profile.full_name}
           </h1>

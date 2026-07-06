@@ -182,13 +182,28 @@ class ExperienceSerializer(serializers.ModelSerializer):
         if not obj.start_date:
             return "Periodo no especificado"
 
-        start = obj.start_date.strftime("%Y")
+        months = {
+            1: "Enero",
+            2: "Febrero",
+            3: "Marzo",
+            4: "Abril",
+            5: "Mayo",
+            6: "Junio",
+            7: "Julio",
+            8: "Agosto",
+            9: "Septiembre",
+            10: "Octubre",
+            11: "Noviembre",
+            12: "Diciembre",
+        }
+
+        start = f"{months[obj.start_date.month]} {obj.start_date.year}"
 
         if obj.is_current:
             return f"{start} — Actualidad"
 
         if obj.end_date:
-            end = obj.end_date.strftime("%Y")
+            end = f"{months[obj.end_date.month]} {obj.end_date.year}"
             return f"{start} — {end}"
 
         return start

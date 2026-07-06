@@ -51,9 +51,6 @@ export function ContactSection({
       className="portfolio-contact-section"
     >
       <div className="portfolio-section__heading">
-        <p className="portfolio-eyebrow">
-          {section?.eyebrow || 'Contacto'}
-        </p>
 
         <h2>
           {section?.title

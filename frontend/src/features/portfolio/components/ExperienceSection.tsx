@@ -66,9 +66,6 @@ export function ExperienceSection({
           ease: [0.22, 1, 0.36, 1],
         }}
       >
-        <p className="portfolio-eyebrow">
-          {section?.eyebrow || 'Experiencia'}
-        </p>
 
         <h2>
           {section?.title

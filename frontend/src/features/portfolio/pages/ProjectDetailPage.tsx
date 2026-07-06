@@ -138,9 +138,6 @@ export function ProjectDetailPage() {
 
       <section className="project-detail__hero">
         <div className="project-detail__intro">
-          <p className="portfolio-eyebrow">
-            {project.role || 'Proyecto de software'}
-          </p>
 
           <h1>{project.title}</h1>
 
@@ -200,9 +197,6 @@ export function ProjectDetailPage() {
 
       <section className="project-detail__content">
         <article className="project-detail__panel project-detail__panel--wide">
-          <p className="portfolio-eyebrow">
-            Descripción
-          </p>
 
           <h2>Acerca del proyecto</h2>
 
@@ -211,9 +205,6 @@ export function ProjectDetailPage() {
 
         {project.impact && (
           <article className="project-detail__panel">
-            <p className="portfolio-eyebrow">
-              Resultados
-            </p>
 
             <h2>Impacto y participación</h2>
 
@@ -223,9 +214,6 @@ export function ProjectDetailPage() {
 
         {project.technologies.length > 0 && (
           <article className="project-detail__panel">
-            <p className="portfolio-eyebrow">
-              Stack
-            </p>
 
             <h2>Tecnologías utilizadas</h2>
 
@@ -245,9 +233,6 @@ export function ProjectDetailPage() {
       {hasGallery && (
         <section className="project-detail__gallery-section">
           <div className="project-detail__section-heading">
-            <p className="portfolio-eyebrow">
-              Galería
-            </p>
 
             <h2>Vistas del proyecto</h2>
           </div>

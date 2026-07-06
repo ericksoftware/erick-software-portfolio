@@ -123,9 +123,6 @@ export function HomePage() {
         className="portfolio-section"
       >
         <div className="portfolio-section__heading">
-          <p className="portfolio-eyebrow">
-            {projectsSection?.eyebrow || 'Proyectos'}
-          </p>
 
           <h2>
             {projectsSection?.title || 'Proyectos'}
@@ -266,9 +263,6 @@ export function HomePage() {
         className="portfolio-section"
       >
         <div className="portfolio-section__heading">
-          <p className="portfolio-eyebrow">
-            {educationSection?.eyebrow || 'Educación'}
-          </p>
 
           <h2>
             {educationSection?.title
@@ -357,9 +351,6 @@ export function HomePage() {
         {data.certifications.length > 0 && (
           <div className="portfolio-certifications">
             <div className="portfolio-certifications__heading">
-              <p className="portfolio-eyebrow">
-                Certificaciones
-              </p>
 
               <h3>Preparación técnica complementaria</h3>
             </div>
@@ -440,9 +431,6 @@ export function HomePage() {
         className="portfolio-section"
       >
         <div className="portfolio-section__heading">
-          <p className="portfolio-eyebrow">
-            {aboutSection?.eyebrow || 'Sobre mí'}
-          </p>
 
           <h2>
             {aboutSection?.title

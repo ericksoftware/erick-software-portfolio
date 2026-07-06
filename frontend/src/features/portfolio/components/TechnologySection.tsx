@@ -46,9 +46,6 @@ export function TechnologySection({
           ease: [0.22, 1, 0.36, 1],
         }}
       >
-        <p className="portfolio-eyebrow">
-          {section?.eyebrow || 'Stack tecnológico'}
-        </p>
 
         <h2>
           {section?.title
@@ -135,9 +132,6 @@ export function TechnologySection({
       {strengths.length > 0 && (
         <div className="portfolio-strengths">
           <div className="portfolio-strengths__heading">
-            <p className="portfolio-eyebrow">
-              Fortalezas profesionales
-            </p>
 
             <h3>
               Habilidades que complementan el desarrollo técnico
